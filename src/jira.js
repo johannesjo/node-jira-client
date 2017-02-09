@@ -20,7 +20,7 @@ export default class JiraApi {
     this.apiVersion = options.apiVersion || '2';
     this.base = options.base || '';
     this.strictSSL = options.hasOwnProperty('strictSSL') ? options.strictSSL : true;
-      // This is so we can fake during unit tests
+    // This is so we can fake during unit tests
     this.request = options.request || request;
     this.webhookVersion = options.webHookVersion || '1.0';
     this.greenhopperVersion = options.greenhopperVersion || '1.0';
@@ -236,7 +236,7 @@ export default class JiraApi {
     })));
   }
 
-/**
+  /**
    * @name createProject
    * @function
    * Create a new Project
@@ -743,13 +743,19 @@ export default class JiraApi {
    * @function
    * @param {string} issueId - Issue to add a worklog to
    * @param {object} worklog - worklog object from the rest API
-   * @param {object} newEstimate - the new value for the remaining estimate field
+   * @param {object} [newEstimate] - the new value for the remaining estimate field
    */
   addWorklog(issueId, worklog, newEstimate) {
+    let query;
+    if (newEstimate) {
+      query = { adjustEstimate: 'new', newEstimate };
+    } else {
+      query = {}
+    }
     const header = {
       uri: this.makeUri({
         pathname: `/issue/${issueId}/worklog`,
-        query: { adjustEstimate: 'new', newEstimate },
+        query: query,
       }),
       body: worklog,
       method: 'POST',
