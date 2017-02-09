@@ -17,10 +17,8 @@
   "engine": {
     "node": ">=4.2.2"
   },
-  "main": "./src/jira.js",
+  "main": "./lib/jira.js",
   "files": [
-    "./src/jira.js",
-    "src/jira.js",
     "lib",
     "src",
     "src/**/*.*",
