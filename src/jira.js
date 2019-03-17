@@ -440,6 +440,29 @@ export default class JiraApi {
     }));
   }
 
+
+  /** Pass a search query to Jira
+   * [Jira Doc](https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-issue-picker-get)
+   * @name searchJira
+   * @function
+   * @param {string} searchString - jira query string in JQL
+   * @param {string} jql - JQL search query url encoded
+   */
+  issuePicker(searchString, jql) {
+    return this.doRequest(this.makeRequestHeader(this.makeUri({
+      pathname: '/issue/picker',
+    }), {
+      method: 'GET',
+      followAllRedirects: true,
+      qs: {
+        showSubTasks: true,
+        showSubTaskParent: true,
+        query: searchString,
+        currentJQL: jql
+      }
+    }));
+  }
+
   /** Pass a search query to Jira
    * [Jira Doc](https://docs.atlassian.com/jira/REST/latest/#d2e4424)
    * @name searchJira
